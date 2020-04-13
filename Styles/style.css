@@ -1,5 +1,7 @@
 body{
     margin-left:30px;
+
+    margin-right:40px;
 }
 
 .product-visible{
@@ -10,3 +12,15 @@ body{
     display:flex;
     justify-content: space-between;
 }
+
+
+.image{
+    margin-top:25%;
+}
+
+.image2{
+    margin-top:25%;
+    
+}
+
+

@@ -1,8 +1,9 @@
-function showonlydiff() {
-    console.log("checked!!!!!");
-}
 
-
+$(document).ready(function () {
+    $('select').formSelect();
+    generateSpecification();
+    countofitem();
+});
 
 
 const data = {
@@ -238,46 +239,154 @@ const getProducts = async (url) => {
 getProducts(url);
 
 */
-
+let selected = false;
 const spec = document.querySelector(".spec");
+const imagecontainer = document.querySelector(".image");
+const name = document.querySelector(".name");
+const price = document.querySelector(".price");
+const imagecontainer2 = document.querySelector(".image2");
+const name2 = document.querySelector(".name2");
+const price2 = document.querySelector(".price2");
+let productOneInfoDisplay = document.querySelector(".product1-info");
+let productTwoInfoDisplay = document.querySelector(".product2-info");
+
+console.log(imagecontainer);
+
+var count =0;
+
+let image = document.createElement("img");
+image.src = "./assets/download.png";
+image.src.height = "300px";
+image.src.width = "300px";
 
 
-let data1= data.products.featuresList;
-data1.forEach((innerObj)=>{
-    //console.log(innerObj);
-    //title will be ul 
-         console.log("key=======>",innerObj.title);
-        let specul= document.createElement("ul");
-        specul.innerHTML=innerObj.title;
+let image2 = document.createElement("img");
+image2.src = "./assets/download.png";
+image2.src.height = "300px";
+image2.src.width = "300px";
+
+imagecontainer.appendChild(image);
+imagecontainer2.appendChild(image2);
+
+//conditional ad product name .
+(selected) ? "some data" : name2.innerHTML = "Add a product";
+
+//conditional ad product name .
+(selected) ? "some data" : name.innerHTML = "Add a product";
+//(selected)?"some data": price.appendChild
+
+
+
+
+
+function generateSpecification() {
+    result = data.products.featuresList;
+    result.forEach((innerObj) => {
+        let specul = document.createElement("ul");
+        specul.innerHTML = innerObj.title;
+        let objfeatures = innerObj.features;
+        objfeatures.forEach((item) => {
+            //featureName will be li
+            let specli = document.createElement("li");
+            specli.innerHTML = item.featureName;
+            specul.appendChild(specli);
+            spec.appendChild(specul);
+        })
+
+    })
+}
+
+function countofitem (){
+    var itemcount= document.querySelector(".countOfitem-selected");
+    let firstproductdiv = document.querySelector(".product1");
+    console.log("firstproductdiv",firstproductdiv.firstChild);
+    let secondproductdiv = document.querySelector(".product2");
+    console.log("secondproductdiv",secondproductdiv.firstChild);
+    
+    if(firstproductdiv.firstChild && secondproductdiv.firstChild){
         
-
-         console.log("features=====>",innerObj.features);
-        let features = innerObj.features;
-features.forEach((item)=>{
-    //featureName will be li
-    let specli = document.createElement("li");
-    specli.innerHTML=item.featureName;
-    specul.appendChild(specli);
-    spec.appendChild(specul);
-    console.log(item.featureName);
-    //console.log("",item.values);
-    //console.log("all keys of obj ",Object.keys(item.values));
-    let obj=item.values;
-   let arrofkeys= Object.keys(item.values);
-   valueofProduct(obj,"TVSF2WYXTKAR7RAF");
-})
-       
-    
-})
-
-
-function valueofProduct(obj,productID){
-for(let key in obj){
-    if(key === productID){
-        //console.log("ProductID full Info=======================",obj[key]);
+        count =2;
+        itemcount.innerHTML = count+" "+`Item selected`; 
+        
     }
+    else if (firstproductdiv.firstChild || secondproductdiv.firstChild){
+        count =1;
+        itemcount.innerHTML = count+" "+`Item selected`; 
+    }
+    else{
+        itemcount.innerHTML = count+" "+`Item selected`; 
+    } 
 }
-    
 
+function firstproductSelectHandler() {
+    let product1 = document.querySelector(".product1");
+    while (product1.firstChild ) {
+            product1.removeChild(product1.firstChild);
+    }
+
+   
+    let selectValue = document.getElementById("selectid").value;
+    console.log(selectValue);
+    selected = true;
+    
+    
+  
+    result = data.products.featuresList;
+    result.forEach((innerObj) => {
+        let prodinfoul = document.createElement("ul");
+        prodinfoul.innerHTML = " ";
+        let objfeatures = innerObj.features;
+        objfeatures.forEach((item) => {
+            let iterateObj = item.values;
+            for (let key in iterateObj) {
+             if(key === selectValue){
+                    let prodinfoli = document.createElement("li");
+                    prodinfoli.innerHTML = iterateObj[key];
+                    prodinfoul.appendChild(prodinfoli);
+                    product1.appendChild(prodinfoul);
+                    
+             }
+               
+            }
+            countofitem ();
+        })
+    })
 }
+
+function secondproductSelectHandler() {
+  
+  
+    let product2 = document.querySelector(".product2");
+    while(product2.firstChild ){
+        product2.removeChild(product2.firstChild);
+    }
+   
+    let selectValue2 = document.getElementById("select2id").value;
+    selected = true;
+    countofitem ();
+
+    result = data.products.featuresList;
+    result.forEach((innerObj) => {
+        let prodinfoul = document.createElement("ul");
+        prodinfoul.innerHTML = " ";
+        let objfeatures = innerObj.features;
+        objfeatures.forEach((item) => {
+            let iterateObj = item.values;
+            for (let key in iterateObj) {
+                if(key=== selectValue2 ){
+                    let prodinfoli = document.createElement("li");
+                    prodinfoli.innerHTML = iterateObj[key];
+                    prodinfoul.appendChild(prodinfoli);
+                    product2.appendChild(prodinfoul);
+                }
+            }
+            countofitem ();
+        })
+    })
+}
+
+
+
+
+
 
