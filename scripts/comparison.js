@@ -228,7 +228,7 @@ const getProducts = async (url) => {
     const response = await fetch(url)
     if (response.status === 200) {
         data = await response.json();
-        console.log(data);
+       
         let dataLength = data.length;
     }
     else {
@@ -250,29 +250,22 @@ const price2 = document.querySelector(".price2");
 let productOneInfoDisplay = document.querySelector(".product1-info");
 let productTwoInfoDisplay = document.querySelector(".product2-info");
 
-console.log(imagecontainer);
 
-var count =0;
-
-let image = document.createElement("img");
-image.src = "./assets/download.png";
-image.src.height = "300px";
-image.src.width = "300px";
+var count = 0;
 
 
-let image2 = document.createElement("img");
-image2.src = "./assets/download.png";
-image2.src.height = "300px";
-image2.src.width = "300px";
 
-imagecontainer.appendChild(image);
-imagecontainer2.appendChild(image2);
+
+
+
+
+
 
 //conditional ad product name .
-(selected) ? "some data" : name2.innerHTML = "Add a product";
+name2.innerHTML = "Add a product";
 
 //conditional ad product name .
-(selected) ? "some data" : name.innerHTML = "Add a product";
+name.innerHTML = "Add a product";
 //(selected)?"some data": price.appendChild
 
 
@@ -296,41 +289,39 @@ function generateSpecification() {
     })
 }
 
-function countofitem (){
-    var itemcount= document.querySelector(".countOfitem-selected");
+function countofitem() {
+    var itemcount = document.querySelector(".countOfitem-selected");
     let firstproductdiv = document.querySelector(".product1");
-    console.log("firstproductdiv",firstproductdiv.firstChild);
     let secondproductdiv = document.querySelector(".product2");
-    console.log("secondproductdiv",secondproductdiv.firstChild);
-    
-    if(firstproductdiv.firstChild && secondproductdiv.firstChild){
-        
-        count =2;
-        itemcount.innerHTML = count+" "+`Item selected`; 
-        
+
+    if (firstproductdiv.firstChild && secondproductdiv.firstChild) {
+
+        count = 2;
+        itemcount.innerHTML = count + " " + `Item selected`;
+
     }
-    else if (firstproductdiv.firstChild || secondproductdiv.firstChild){
-        count =1;
-        itemcount.innerHTML = count+" "+`Item selected`; 
+    else if (firstproductdiv.firstChild || secondproductdiv.firstChild) {
+        count = 1;
+        itemcount.innerHTML = count + " " + `Item selected`;
     }
-    else{
-        itemcount.innerHTML = count+" "+`Item selected`; 
-    } 
+    else {
+        itemcount.innerHTML = count + " " + `Item selected`;
+    }
 }
 
 function firstproductSelectHandler() {
     let product1 = document.querySelector(".product1");
-    while (product1.firstChild ) {
-            product1.removeChild(product1.firstChild);
+    while (product1.firstChild) {
+        product1.removeChild(product1.firstChild);
+
     }
 
-   
+
     let selectValue = document.getElementById("selectid").value;
-    console.log(selectValue);
     selected = true;
-    
-    
-  
+
+
+
     result = data.products.featuresList;
     result.forEach((innerObj) => {
         let prodinfoul = document.createElement("ul");
@@ -339,31 +330,73 @@ function firstproductSelectHandler() {
         objfeatures.forEach((item) => {
             let iterateObj = item.values;
             for (let key in iterateObj) {
-             if(key === selectValue){
+                if (key === selectValue) {
                     let prodinfoli = document.createElement("li");
                     prodinfoli.innerHTML = iterateObj[key];
                     prodinfoul.appendChild(prodinfoli);
                     product1.appendChild(prodinfoul);
-                    
-             }
-               
+
+                }
+
             }
-            countofitem ();
+            countofitem();
         })
     })
+    while (imagecontainer.firstChild) {
+        imagecontainer.removeChild(imagecontainer.firstChild);
+
+    }
+    let imageresult = data.products.compareSummary.images;
+    for (let intkey in imageresult) {
+        if (intkey === selectValue) {
+            let image = document.createElement("img");
+            image.src = imageresult[intkey];
+            image.style.height = '100px';
+            image.style.width = '200px';
+            imagecontainer.appendChild(image);
+        }
+    }
+
+    let productName = data.products.compareSummary.titles;
+    let prodName = document.querySelector(".name");
+    while (prodName.firstChild) {
+        prodName.removeChild(prodName.firstChild);
+
+    }
+
+    for (let names in productName) {
+        if (names === selectValue) {
+
+            prodName.innerHTML = productName[names].title;
+        }
+    }
+
+    let pricingresult = data.products.compareSummary.productPricingSummary;
+    for (let pricing in pricingresult) {
+        if (pricing === selectValue) {
+            let fp = document.querySelector(".finalPrice");
+            let pricevalue = document.querySelector(".pricevalue");
+            let totaldiscount = document.querySelector(".totaldiscount");
+            fp.innerHTML = `&#8377;` + pricingresult[pricing].finalPrice;
+            pricevalue.innerHTML = `&#8377;` + pricingresult[pricing].price;
+            totaldiscount.innerHTML = pricingresult[pricing].totalDiscount + "%" + " " + "Off";
+        }
+    }
+
+
 }
 
 function secondproductSelectHandler() {
-  
-  
+
+
     let product2 = document.querySelector(".product2");
-    while(product2.firstChild ){
+    while (product2.firstChild) {
         product2.removeChild(product2.firstChild);
     }
-   
+
     let selectValue2 = document.getElementById("select2id").value;
     selected = true;
-    countofitem ();
+    countofitem();
 
     result = data.products.featuresList;
     result.forEach((innerObj) => {
@@ -373,16 +406,62 @@ function secondproductSelectHandler() {
         objfeatures.forEach((item) => {
             let iterateObj = item.values;
             for (let key in iterateObj) {
-                if(key=== selectValue2 ){
+                if (key === selectValue2) {
                     let prodinfoli = document.createElement("li");
                     prodinfoli.innerHTML = iterateObj[key];
                     prodinfoul.appendChild(prodinfoli);
                     product2.appendChild(prodinfoul);
                 }
             }
-            countofitem ();
+            countofitem();
         })
     })
+
+
+    let productName = data.products.compareSummary.titles;
+    let secondprodName = document.querySelector(".name2");
+    while (secondprodName.firstChild) {
+        secondprodName.removeChild(secondprodName.firstChild);
+
+    }
+
+    for (let names in productName) {
+        if (names === selectValue2) {
+
+            secondprodName.innerHTML = productName[names].title;
+        }
+    }
+
+
+
+    while (imagecontainer2.firstChild) {
+        imagecontainer2.removeChild(imagecontainer2.firstChild);
+
+    }
+    let imageresult = data.products.compareSummary.images;
+    for (let intkey in imageresult) {
+        if (intkey === selectValue2) {
+            let image = document.createElement("img");
+            image.src = imageresult[intkey];
+            image.style.height = '100px';
+            image.style.width = '200px';
+            imagecontainer2.appendChild(image);
+        }
+    }
+
+
+
+    let pricingresult = data.products.compareSummary.productPricingSummary;
+    for (let pricing in pricingresult) {
+        if (pricing === selectValue2) {
+            let fp2 = document.querySelector(".finalPrice2");
+            let pricevalue2 = document.querySelector(".pricevalue2");
+            let totaldiscount2 = document.querySelector(".totaldiscount2");
+            fp2.innerHTML = `&#8377;` + pricingresult[pricing].finalPrice;
+            pricevalue2.innerHTML = `&#8377;` + pricingresult[pricing].price;
+            totaldiscount2.innerHTML = pricingresult[pricing].totalDiscount + "%" + " " + "Off";
+        }
+    }
 }
 
 

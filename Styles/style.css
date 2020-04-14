@@ -15,12 +15,70 @@ body{
 
 
 .image{
-    margin-top:25%;
+    margin-top:15%;
+    width:200px;
+    height:90px;
+    border:1px black;
+    background-color:grey;
 }
 
+
+
 .image2{
-    margin-top:25%;
+    margin-top:15%;
+    width:200px;
+    height:90px;
+    border:1px black;
+    background-color:grey;
     
 }
 
+ul a{
+    font-size:20px;
+}
 
+.product1-info{
+    width:22%;
+}
+
+
+.product2-info{
+    width:22%;
+}
+
+.price{
+    display:flex;
+    justify-content:space-between;
+}
+
+.pricevalue{
+    text-decoration: line-through;
+    color:red;
+}
+.finalPrice{
+    font-size: 16px;
+    color:yellowgreen;
+    font-weight: bold;
+}
+
+.finalPrice2{
+    font-size: 16px;
+    color:yellowgreen;
+    font-weight: bold;
+}
+
+.pricevalue2{
+    
+    text-decoration: line-through;
+    color:red;
+}
+
+.totaldiscount{
+    color:yellowgreen;
+    font-size: 15px;
+}
+
+.totaldiscount2{
+    color:yellowgreen;
+    font-size: 15px;
+}
